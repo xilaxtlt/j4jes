@@ -12,7 +12,7 @@ import java.io.Serializable;
 public interface Event extends Serializable {
 
     @NotNull
-    String getEventName();
+    default String getEventName() { return this.getClass().getName(); }
 
     default boolean asyncEvent() { return false; }
 
