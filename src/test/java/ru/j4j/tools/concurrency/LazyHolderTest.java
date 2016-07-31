@@ -1,12 +1,10 @@
-package ru.j4j.eventSystem.tools.concurrency;
+package ru.j4j.tools.concurrency;
 
 import org.testng.Assert;
 import org.testng.annotations.*;
-import ru.j4j.tools.concurrency.LazyHolder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.util.stream.Stream.generate;
