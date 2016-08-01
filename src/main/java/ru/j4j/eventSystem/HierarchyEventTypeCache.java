@@ -16,28 +16,30 @@ import static java.util.Collections.unmodifiableCollection;
  * @author Artemiy Shchekotov (xilaxtlt)
  */
 final class HierarchyEventTypeCache {
-    private static final Map<Class<? extends Event>, Collection<Class<? extends Event>>> cache = new ConcurrentHashMap<>();
+    static final Map<Class<? extends Event>, Collection<Class<? extends Event>>> cache = new ConcurrentHashMap<>();
 
     static Collection<Class<? extends Event>> flattenHierarchy(Class<? extends Event> eventType) {
-        return cache.computeIfAbsent(eventType, k -> {
-            final Class<Event>                       eventClass = Event.class;
-            final Collection<Class<? extends Event>> result     = new HashSet<>();
+        return cache.computeIfAbsent(eventType, HierarchyEventTypeCache::__flattenHierarchy);
+    }
 
-            result.add(eventType);
-            result.addAll(collectEventInterfaces(eventType));
+    private static Collection<Class<? extends Event>> __flattenHierarchy(Class<? extends Event> eventType) {
+        final Class<Event>                       eventClass = Event.class;
+        final Collection<Class<? extends Event>> result     = new HashSet<>();
 
-            Class superType = null;
-            while ((superType = eventType.getSuperclass()) != null) {
-                if (eventClass.isAssignableFrom(superType)) {
-                    @SuppressWarnings("unchecked")
-                    Class<? extends Event> type = (Class<? extends Event>)superType;
-                    result.add(type);
-                    result.addAll(collectEventInterfaces(type));
-                }
-            }
+        result.add(eventType);
+        result.addAll(collectEventInterfaces(eventType));
 
-            return unmodifiableCollection(result);
-        });
+        Class superType = eventType;
+        while ((superType = superType.getSuperclass()) != null
+                && eventClass.isAssignableFrom(superType))
+        {
+            @SuppressWarnings("unchecked")
+            Class<? extends Event> type = (Class<? extends Event>)superType;
+            result.add(type);
+            result.addAll(collectEventInterfaces(type));
+        }
+
+        return unmodifiableCollection(result);
     }
 
     @SuppressWarnings("unchecked")
