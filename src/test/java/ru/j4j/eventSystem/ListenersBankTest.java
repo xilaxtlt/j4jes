@@ -137,9 +137,9 @@ public class ListenersBankTest {
     /* ************************************************************************************************************* */
     static class Listener_A {
         @EventListener(order = 2)
-        public void listenA_1(Event_A event_a) {}
+        public void listenA_1(EventBus eventBus, Event_A event_a) {}
         @EventListener(order = 1)
-        public void listenA_2(Event_A event_a) {}
+        public void listenA_2(Event_A event_a, EventBus eventBus) {}
         @EventListener(afterListener = Listener_B.class)
         public void listenB(Event_B event_b) {}
         public void listenC(Event_C event_c) {}
