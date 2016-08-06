@@ -83,7 +83,7 @@ public final class CallbackBuilder<T extends Event> {
 
         @Override
         public void exception(EventBus eventBus, EventHolder<T> event, Exception exception) throws Exception {
-            if (callbackCanceled != null) {
+            if (callbackException != null) {
                 callbackException.exception(eventBus, event, exception);
             }
         }
