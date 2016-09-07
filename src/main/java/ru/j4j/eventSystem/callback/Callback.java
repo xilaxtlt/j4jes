@@ -8,6 +8,5 @@ import ru.j4j.eventSystem.event.Event;
 public interface Callback<T extends Event>
         extends CallbackCompleted<T>,
                 CallbackBeforeSend<T>,
-                CallbackCanceled<T>,
                 CallbackException<T> {
 }

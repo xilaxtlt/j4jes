@@ -11,19 +11,28 @@ import java.io.Serializable;
  */
 public interface Event extends Serializable {
 
+    boolean                   DEFAULT_ASYNCHRONOUS_VALUE         = false;
+    int                       DEFAULT_REPEAT_COUNT_VALUE         = 0;
+    long                      DEFAULT_TIMEOUT_VALUE              = 0;
+    int                       DEFAULT_REPEAT_TIMEOUT_FACTOR      = 1;
+    int                       DEFAULT_REPEAT_TIMEOUT_DIVIDER     = 1;
+    int                       DEFAULT_REPEAT_TIMEOUT_INCREMENTAL = 0;
+    Callback<? extends Event> DEFAULT_CALLBACK_VALUE             = null;
+    boolean                   DEFAULT_ASYNC_CALLBACK_VALUE       = false;
+
     @NotNull
-    default String getEventName() { return this.getClass().getName(); }
+    default String eventName() { return this.getClass().getName(); }
 
-    default boolean asynchronous() { return false; }
+    default boolean asynchronous() { return DEFAULT_ASYNCHRONOUS_VALUE; }
 
-    default int  repeatCount()                { return 0; }
-    default long repeatTimeout()              { return 0; }
-    default int  repeatTimeoutFactor()        { return 1; }
-    default int  repeatTimeoutDivider()       { return 1; }
-    default int  repeatTimeoutIncremental()   { return 0; }
+    default int  repeatCount()                { return DEFAULT_REPEAT_COUNT_VALUE; }
+    default long repeatTimeout()              { return DEFAULT_TIMEOUT_VALUE; }
+    default int  repeatTimeoutFactor()        { return DEFAULT_REPEAT_TIMEOUT_FACTOR; }
+    default int  repeatTimeoutDivider()       { return DEFAULT_REPEAT_TIMEOUT_DIVIDER; }
+    default int  repeatTimeoutIncremental()   { return DEFAULT_REPEAT_TIMEOUT_INCREMENTAL; }
 
     @Nullable
-    default Callback<? extends Event> getCallback()   { return null; }
-    default boolean                   asyncCallback() { return false; }
+    default Callback<? extends Event> callback()      { return DEFAULT_CALLBACK_VALUE; }
+    default boolean                   asyncCallback() { return DEFAULT_ASYNC_CALLBACK_VALUE; }
 
 }

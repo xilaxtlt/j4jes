@@ -40,11 +40,6 @@ public final class CallbackBuilder<T extends Event> {
         return this;
     }
 
-    public CallbackBuilder<T> ifCancel(@Nullable CallbackCanceled<T> callbackCanceled) {
-        callback.callbackCanceled = callbackCanceled;
-        return this;
-    }
-
     public CallbackBuilder<T> ifException(@Nullable CallbackException<T> callbackException) {
         callback.callbackException = callbackException;
         return this;
@@ -55,7 +50,6 @@ public final class CallbackBuilder<T extends Event> {
     public static class CallbackImpl<T extends Event> implements Callback<T> {
         private CallbackBeforeSend<T> callbackBeforeSend;
         private CallbackCompleted<T>  callbackCompleted;
-        private CallbackCanceled<T>   callbackCanceled;
         private CallbackException<T>  callbackException;
 
         private CallbackImpl() {
@@ -71,13 +65,6 @@ public final class CallbackBuilder<T extends Event> {
         public void completed(EventBus eventBus, T event) {
             if (callbackCompleted != null) {
                 callbackCompleted.completed(eventBus, event);
-            }
-        }
-
-        @Override
-        public void canceled(EventBus eventBus, T event, boolean isDone, Throwable exception) {
-            if (callbackCanceled != null) {
-                callbackCanceled.canceled(eventBus, event, isDone, exception);
             }
         }
 

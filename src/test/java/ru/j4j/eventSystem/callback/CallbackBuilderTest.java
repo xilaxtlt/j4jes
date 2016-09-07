@@ -40,13 +40,6 @@ public class CallbackBuilderTest {
     }
 
     @Test
-    public void ifCancelTest() {
-        CallbackCanceled callbackCanceled = mock(CallbackCanceled.class);
-        buildCallback().ifCancel(callbackCanceled).getCallback().canceled(eventBus, event, true, exception);
-        verify(callbackCanceled, times(1)).canceled(eq(eventBus), eq(event), eq(true), eq(exception));
-    }
-
-    @Test
     public void ifExceptionTest() throws Exception {
         CallbackException callbackException = mock(CallbackException.class);
         buildCallback().ifException(callbackException).getCallback().exception(eventBus, eventHolder, exception);
